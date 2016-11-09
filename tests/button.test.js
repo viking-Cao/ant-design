@@ -1,31 +1,19 @@
 import React from 'react';
-import TestUtils from 'react-addons-test-utils';
+import renderer from 'react-test-renderer';
 import Button from '../components/button/button';
 
 describe('Button', function() {
-  let button;
-  let buttonNode;
-
-  beforeEach(() => {
-    button = TestUtils.renderIntoDocument(
+  it('renders correctly', () => {
+    const tree = renderer.create(
       <Button>Follow</Button>
-    );
-    buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 
-  it('should set the type to button by default', () => {
-    expect(buttonNode.type).toBe('button');
-  });
-
-  it('should set the default className to button', () => {
-    expect(buttonNode.className).toBe('ant-btn');
-  });
-
-  it('should has a whitespace in two Chinese characters', () => {
-    button = TestUtils.renderIntoDocument(
+  it('renders Chinese characters correctly', () => {
+    const tree = renderer.create(
       <Button>按钮</Button>
-    );
-    buttonNode = TestUtils.findRenderedDOMComponentWithTag(button, 'button');
-    expect(buttonNode.textContent).toBe('按 钮');
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });
